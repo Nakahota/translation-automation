@@ -2,6 +2,7 @@
 import json
 import re
 from pathlib import Path
+from token_manager import get_access_token
 
 from freelancersdk.session import Session
 from freelancersdk.resources.projects.projects import search_projects
@@ -32,11 +33,12 @@ DIRECTION_PATTERN = re.compile(
 )
 
 
-def get_session():
-    with TOKEN_FILE.open("r", encoding="utf-8") as f:
-        tokens = json.load(f)
 
-    return Session(oauth_token=tokens["access_token"])
+def get_session():
+    access_token = get_access_token()
+
+    return Session(oauth_token=access_token)
+
 
 
 def search_translation_projects(session):
